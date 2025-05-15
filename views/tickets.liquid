@@ -1,0 +1,125 @@
+{%- comment -%}
+/views/tickets.liquid
+{%- endcomment -%}
+
+{% include 'partials/head.liquid' %}
+{% include 'partials/header.liquid' %}
+
+<main class="tickets-page">
+    <h1>BOOK YOUR TICKETS</h1>
+
+    <nav class="step-navigation" aria-label="Progress">
+        <ul>
+            <li class="active">1. SELECT TICKETS</li>
+            <li>2. PICK A DATE</li>
+            <li>3. YOUR INFORMATION</li>
+            <li>4. REVIEW</li>
+            <li>5. PAYMENT</li>
+            <li>6. CONFIRMATION</li>
+        </ul>
+    </nav>
+
+    <section class="choose-location">
+        <h2>Choose a Location</h2>
+
+        {% for museum in museums %}
+            <article class="museum-card">
+                <input type="radio" name="museum" id="museum-{{ museum.id }}" />
+                <label for="museum-{{ museum.id }}">
+                    <div class="museum-info">
+                        <h3>{{ museum.name }}</h3>
+                        <p>{{ museum.description }}</p>
+                        {% if museum.exhibitions %}
+                            <strong>Current Exhibitions:</strong>
+                            <ul>
+                                {% for ex in museum.exhibitions %}
+                                    <li><em>{{ ex }}</em></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <img src="{{ museum.image }}" alt="Photo of {{ museum.name }}" width="200" />
+                </label>
+
+                {% if museum.tickets %}
+                    <table class="ticket-table">
+                        <thead>
+                        <tr>
+                            <th>Type of ticket</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ticket in museum.tickets %}
+                            <tr>
+                                <td>
+                                    <strong>{{ ticket.label }}</strong>
+                                    {% if ticket.price > 0 %}
+                                        <div class="ticket-price">QAR {{ ticket.price }}</div>
+                                    {% else %}
+                                        <div class="ticket-price">Free</div>
+                                    {% endif %}
+                                </td>
+                                <td class="ticket-qty-cell">
+                                    <button class="decrease">–</button>
+                                    <input type="number"
+                                           min="0"
+                                           value="0"
+                                           data-price="{{ ticket.price }}"
+                                           class="ticket-qty" />
+                                    <button class="increase">+</button>
+                                </td>
+                                <td class="subtotal">QAR 0</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </section>
+
+    <aside class="cart">
+        <h3>Your Cart</h3>
+        <p>Total: QAR 0</p>
+        <button class="next-step">NEXT STEP</button>
+    </aside>
+</main>
+
+<script>
+    document.querySelectorAll('.increase').forEach(btn =>
+        btn.addEventListener('click', () => {
+            const input = btn.previousElementSibling
+            input.value = parseInt(input.value) + 1
+            updateSubtotal(input)
+        })
+    )
+    document.querySelectorAll('.decrease').forEach(btn =>
+        btn.addEventListener('click', () => {
+            const input = btn.nextElementSibling
+            input.value = Math.max(0, parseInt(input.value) - 1)
+            updateSubtotal(input)
+        })
+    )
+    function updateSubtotal(input) {
+        const price = parseFloat(input.dataset.price)
+        const qty = parseInt(input.value)
+        input.closest('tr').querySelector('.subtotal')
+            .textContent = `QAR ${price * qty}`
+        updateCartTotal()
+    }
+    function updateCartTotal() {
+        let total = 0
+        document.querySelectorAll('.ticket-qty').forEach(input => {
+            total += parseFloat(input.dataset.price) * parseInt(input.value)
+        })
+        document.querySelector('.cart').innerHTML = `
+      <h3>Your Cart</h3>
+      <p>Total: QAR ${total}</p>
+      <button class="next-step">NEXT STEP</button>
+    `
+    }
+</script>
+
+{% include 'partials/foot.liquid' %}
