@@ -1,12 +1,9 @@
-{%- comment -%}
-/views/tickets.liquid
-{%- endcomment -%}
-
 {% include 'partials/head.liquid' %}
 {% include 'partials/header.liquid' %}
 
 <main class="tickets-page">
-    <h1>BOOK YOUR TICKETS</h1>
+
+    <h1 class="tickets-h1">BOOK YOUR TICKETS</h1>
 
     <nav class="step-navigation" aria-label="Progress">
         <ul>
@@ -19,16 +16,21 @@
         </ul>
     </nav>
 
-    <section class="choose-location">
+    <section class="museum-list">
         <h2>Choose a Location</h2>
 
         {% for museum in museums %}
             <article class="museum-card">
-                <input type="radio" name="museum" id="museum-{{ museum.id }}" />
-                <label for="museum-{{ museum.id }}">
-                    <div class="museum-info">
+                <!-- 1) Radio + Info -->
+                <div class="museum-info">
+                    <input type="radio"
+                           name="museum"
+                           id="museum-{{ museum.id }}" />
+
+                    <label for="museum-{{ museum.id }}">
                         <h3>{{ museum.name }}</h3>
                         <p>{{ museum.description }}</p>
+
                         {% if museum.exhibitions %}
                             <strong>Current Exhibitions:</strong>
                             <ul>
@@ -37,11 +39,18 @@
                                 {% endfor %}
                             </ul>
                         {% endif %}
-                    </div>
-                    <img src="{{ museum.image }}" alt="Photo of {{ museum.name }}" width="200" />
-                </label>
+                    </label>
+                </div>
 
-                {% if museum.tickets %}
+                <!-- 2) Image -->
+                <div class="museum-image">
+                    <img src="{{ museum.image }}"
+                         alt="Photo of {{ museum.name }}"
+                         loading="lazy" />
+                </div>
+
+                <!-- 3) Ticket Table (hidden until selected) -->
+                <div class="ticket-table-wrapper">
                     <table class="ticket-table">
                         <thead>
                         <tr>
@@ -75,12 +84,12 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                {% endif %}
+                </div>
             </article>
         {% endfor %}
     </section>
 
-    <aside class="cart">
+    <aside class="cart-summary">
         <h3>Your Cart</h3>
         <p>Total: QAR 0</p>
         <button class="next-step">NEXT STEP</button>
@@ -88,38 +97,51 @@
 </main>
 
 <script>
+    // + / – buttons
     document.querySelectorAll('.increase').forEach(btn =>
         btn.addEventListener('click', () => {
             const input = btn.previousElementSibling
-            input.value = parseInt(input.value) + 1
+            input.value = +input.value + 1
             updateSubtotal(input)
         })
     )
     document.querySelectorAll('.decrease').forEach(btn =>
         btn.addEventListener('click', () => {
             const input = btn.nextElementSibling
-            input.value = Math.max(0, parseInt(input.value) - 1)
+            input.value = Math.max(0, +input.value - 1)
             updateSubtotal(input)
         })
     )
+
     function updateSubtotal(input) {
         const price = parseFloat(input.dataset.price)
-        const qty = parseInt(input.value)
-        input.closest('tr').querySelector('.subtotal')
+        const qty   = +input.value
+        const row   = input.closest('tr')
+        row.querySelector('.subtotal')
             .textContent = `QAR ${price * qty}`
         updateCartTotal()
     }
+
     function updateCartTotal() {
         let total = 0
         document.querySelectorAll('.ticket-qty').forEach(input => {
-            total += parseFloat(input.dataset.price) * parseInt(input.value)
+            total += parseFloat(input.dataset.price) * +input.value
         })
-        document.querySelector('.cart').innerHTML = `
-      <h3>Your Cart</h3>
-      <p>Total: QAR ${total}</p>
-      <button class="next-step">NEXT STEP</button>
-    `
+        const cart = document.querySelector('.cart-summary')
+        cart.querySelector('p')
+            .textContent = `Total: QAR ${total}`
     }
+
+    // Show table only when radio is checked
+    document.querySelectorAll('.museum-card input[type=radio]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            document.querySelectorAll('.ticket-table-wrapper')
+                .forEach(w => w.classList.remove('visible'))
+            radio.closest('.museum-card')
+                .querySelector('.ticket-table-wrapper')
+                .classList.add('visible')
+        })
+    })
 </script>
 
 {% include 'partials/foot.liquid' %}

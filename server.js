@@ -66,13 +66,13 @@ app.get('/:lang/details/:id', async (req, res) => {
   })
 })
 
-// ✅ TICKETS PAGE (this was missing!)
+//  TICKETS PAGE
 app.get('/tickets', async (req, res) => {
   const museums = [
     {
       id: 1,
       name: "National Museum of Qatar",
-      image: "/assets/nmoq.jpg",
+      // image: "/assets/nmoq.jpg",
       description: "Your ticket covers admission to the museum and all exhibitions.",
       exhibitions: [
         "Ultraleggera: A Design Journey...",

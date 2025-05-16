@@ -297,6 +297,12 @@ main{
 
 /*tickets-styles*/
 
+
+.tickets-h1{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
 .step-navigation ul {
     display: flex;
     list-style: none;
