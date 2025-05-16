@@ -84,7 +84,7 @@ app.get('/tickets', async (req, res) => {
     {
       id: 1,
       name: "National Museum of Qatar",
-      // image: "/assets/nmoq.jpg",
+      image: "/assets/nmoq.jpg",
       description: "Your ticket covers admission to the museum and all exhibitions.",
       exhibitions: [
         "Ultraleggera: A Design Journey...",
