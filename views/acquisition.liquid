@@ -1,8 +1,94 @@
 <main>
+    <!-- Engelse versie acquisition pagina --> 
 
     <section class="title">
         <h1 class="title-acquisition">Proposal for object acquisition</h1>
-        
         <p class="paragraph-acquisition">Interested in donating or selling an artwork to Qatar Museums? Submit your information through this acquisitions proposal form.</p>
-
     </section>
+
+    <section class="form-section ">
+        <p class="paragraph-mandatory"> Fields marked * are Mandatory</p>
+
+        <form method="post" action="/acquisition" data-enhanced="formulier-{{ id }}">
+            <h2>Your information</h2>
+            <p class="paragraph-mandatory">Full name*</p>
+            <input type="text" name="name" required/>
+
+            <p class="paragraph-mandatory">E-mail*</p>
+            <input type="text" name="email" required/>
+
+            <h2>Object details</h2>
+            <input type="text" name="description" required/>
+
+            <h2>Uploads</h2>
+            <p class="paragraph-upload">Additional documents</p>
+            <input type="file">
+            
+            <button  id="submit-button" class="submit-button-en" >Submit</button>
+        </form>
+    </section>
+
+     <section class="form-section history">
+        <h2>History proposals</h2>
+
+        {% for message in messages reversed %}
+            {% if forloop.index <= 3 %} 
+                <p class="text-history"> {{ "Successful sent proposal at " | append: message.created }} </p> 
+            {% else %}
+                {% break %} 
+            {% endif %}
+        {% endfor %}
+    </section>
+
+
+    <!-- Arabische form acquistion -->
+        <section class="title">
+            <h1 class="title-acquisition">اقتراح لاكتساب كائن</h1>
+            <p class="paragraph-acquisition">هل أنت مهتم بالتبرع أو بيع عمل فني لمتاحف قطر؟ قم بإرسال معلوماتك من خلال هذا النموذج لاقتراح الاقتناء.</p>
+        </section>
+
+        <section class="form-section">
+            <p class="paragraph-mandatory">الحقول المحددة بـ * إلزامية</p>
+
+            <form method="post" action="/acquisition" lang="ar">
+                <h2 dir="rtl">معلوماتك</h2>
+                <p dir="rtl" class="paragraph-mandatory">الاسم الكامل*</p>
+                <input type="text" name="name" required  lang="ar" dir="rtl"/> <!-- de lang en dir attributen geven aan dat de inhoud van rechts naar links is en in het Arabisch is (mobiel) -->
+
+                <p dir="rtl" class="paragraph-mandatory">البريد الإلكتروني*</p>
+                <input type="text" name="email" required  lang="ar" dir="rtl"/>
+
+                <h2 dir="rtl">تفاصيل الكائن</h2>
+                <input type="text" name="description" required  lang="ar" dir="rtl"/>
+
+
+                <h2 dir="rtl">التحميلات</h2>
+                <p dir="rtl" class="paragraph-upload">مستندات إضافية</p>
+                <input accept="*" type="file" class="file-input-ar">
+
+                <button id="submit-button" class="submit-button-ar">إرسال</button>
+            </form>
+        </section>
+
+        <section class="form-section history">
+            <h2>سجل الاقتراحات</h2>
+
+            {% for message in messages reversed %}
+                {% if forloop.index <= 3 %}
+                    <p class="text-history"> {{ "تم إرسال الاقتراح بنجاح في " | append: message.created }} </p>
+                {% else %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        </section>
+            
+        <!-- Error bij invoeren onbekende taal in URL -->
+        <section class="title">
+            <h1 class="title-acquisition">Page not found</h1>
+            <p class="paragraph-acquisition">Looks like this page doesn’t exist in this language.</p>
+            <a class="return-homepage" href="/">Homepage</a>    
+    </section>
+
+</main>
+
+

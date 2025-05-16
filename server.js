@@ -47,6 +47,18 @@ app.get('/object/:id/', async (req, res) => {
   const response = await fetch(`https://fdnd-agency.directus.app/items/fabrique_art_objects/${id}?fields=title,image,summary,objectNumber,site,displayDate,artist,materials,recordType`)
   const json = await response.json()
 
+  const apiResponseJSON = await apiResponse.json();
+  
+  response.render('details.liquid', {object: apiResponseJSON.data});
+})
+  
+
+//  main
+  
+app.get('/:lang/details/:id', async function (request, response) {
+  // console.log("GET detail pagina met een id "+request.params.id)
+
+
   res.render('details.liquid', { object: json.data })
 })
 
