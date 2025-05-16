@@ -1,3 +1,34 @@
 <main>
-    <h1>Hello world 2</h1>
+    <ul class="art-images">
+        {% for api in artworkData %}
+        <li class="image-container">
+            <a style="view-transition-name: 'image-{{ api.id }};'" href="/details/{{ api.id }}">
+                <div class="image-wrapper">
+                    <div class="skeleton"></div> 
+                    <img class="lazy-image" 
+                        src="https://fdnd-agency.directus.app/assets/{{ api.image }}"
+                        alt="art images for qatar museums">
+                </div>
+            </a>
+            <!--Like and title-->
+            <div class="object-info">
+                <p>{{art_object.title}}</p>
+                <!--like and unlike function-->
+                {% if art_object.is_liked %}
+                <form action="/unlike/{{ api.id }}" method="POST" aria-label="Unlike">
+                    <button type="submit" class="like-button"> 
+                        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#ff0000" stroke="#ff0000" stroke-width="0.00048000000000000007"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.384"></g><g id="SVGRepo_iconCarrier"> <path d="M0 0h48v48H0z" fill="none"></path> <g id="Shopicon"> <path d="M8.444,27L24,42l15.556-15c2.7-2.033,4.444-5.256,4.444-8.889C44,11.978,39.022,7,32.889,7 C29.256,7,26.022,8.756,24,11.456C21.978,8.756,18.744,7,15.111,7C8.978,7,4,11.978,4,18.111C4,21.744,5.744,24.967,8.444,27z"></path> </g> </g></svg>                            
+                    </form>
+
+                {% else %}
+                <form action="/like/{{ api.id }}" method="POST">
+                    <button type="submit"class="like-button" aria-label="Like">
+                     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#ddd" stroke="#ddd" stroke-width="0.00048000000000000007"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.384"></g><g id="SVGRepo_iconCarrier"> <path d="M0 0h48v48H0z" fill="none"></path> <g id="Shopicon"> <path d="M8.444,27L24,42l15.556-15c2.7-2.033,4.444-5.256,4.444-8.889C44,11.978,39.022,7,32.889,7 C29.256,7,26.022,8.756,24,11.456C21.978,8.756,18.744,7,15.111,7C8.978,7,4,11.978,4,18.111C4,21.744,5.744,24.967,8.444,27z"></path> </g> </g></svg>                       
+                    </form>
+
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </main>

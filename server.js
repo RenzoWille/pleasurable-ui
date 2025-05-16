@@ -99,6 +99,15 @@ app.get('/tickets', async (req, res) => {
   res.render('tickets.liquid', { museums })
 })
 
+
+
+//Route naar admin
+app.get('/admin', async function (request, response){
+  response.render('admin.liquid', {
+  });
+
+})
+
 // POST for like
 
 app.post('/like-artwork/:id', async function (request, response) {
@@ -111,17 +120,15 @@ app.post('/like-artwork/:id', async function (request, response) {
   // Post naar database
   await fetch(postLikeUrl,{
     method: 'POST',
+    body: JSON.stringify({
+      "fabrique_users_id": 5,
+      "fabrique_art_objects_id": request.params.id
+
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
-    // body: JSON.stringify({
-    //   //"fabrique_users_id": 1,
-    //   //"fabrique_art_objects_id": 33,
-    //   // Naam in database: id van de user
-    //   fabrique_users_id: 3,
-    //   // Naam in database: id van item die je wilt toevoegen
-    //   fabrique_art_objects_id: request.params.id
-    // }),
+
   })
 
   response.redirect(303, '/details/'+request.params.id)
