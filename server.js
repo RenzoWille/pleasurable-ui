@@ -128,16 +128,19 @@ app.get('/tickets', async (req, res) => {
 })
 
 
-
 //Route naar admin
 app.get('/admin', async function (request, response){
 
-
+  // Haal gelikete artworks op van gebruiker met id 5 //verander id terug naar 3
+  const likedArtworksURL = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5}&fields=id,fabrique_art_objects_id.id,fabrique_art_objects_id.title,fabrique_art_objects_id.artist,fabrique_art_objects_id.image`
+  const likedArtworksFetch = await fetch(likedArtworksURL)
+  app.get('/admin', async function (request, response){
+    
   response.render('admin.liquid', {
-
-  });
-
-})
+    likedArtworks: likedArtworksJSON.data
+    })
+  })
+});
 
 // POST for like
 
