@@ -22,30 +22,6 @@
         </ul>
       </section>
 
-      <section class="Time-line-container">
-        <!--Template (Fill in correctly when u have the data u need and after u've done the server.js)-->
-        <!-- Dynamic Time Period Sections -->
-        {% for periodGroup in artworksByPeriod %}
-        <div class="Time-period-container">
-          <h2>{{ periodGroup.period }}</h2>
-          <ul class="art-images">
-            {% for api in periodGroup.artworks %}
-            <li class="image-container">
-              <a style="view-transition-name: 'image-{{ api.fabrique_art_objects_id.id }}';" href="/details/{{ api.fabrique_art_objects_id.id }}">
-                <article class="image-wrapper">
-                  <div class="skeleton"></div> 
-                  <img class="lazy-image" 
-                      src="https://fdnd-agency.directus.app/assets/{{ api.fabrique_art_objects_id.image }}"
-                      alt="art images for qatar museums">
-                </article>
-              </a>
-              <!--title, artist, year here -->
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endfor %}
-      </section>
       
       
 </main>

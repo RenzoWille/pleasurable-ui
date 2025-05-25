@@ -135,11 +135,37 @@ app.get('/admin', async function (request, response){
   const likedArtworksURL = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5}&fields=id,fabrique_art_objects_id.id,fabrique_art_objects_id.title,fabrique_art_objects_id.artist,fabrique_art_objects_id.image`
   const likedArtworksFetch = await fetch(likedArtworksURL)
   app.get('/admin', async function (request, response){
-    
-  response.render('admin.liquid', {
-    likedArtworks: likedArtworksJSON.data
-    })
   })
+
+  //Display dates -> fetch/filter artworks by period
+  // Group by displaydate (e.g., "1990s", "2000s", or exact year)
+    const artworksByPeriod = {}
+
+    likedArtworksFetch.forEach(item => {
+      const artwork = item.fabrique_art_objects_id
+      const period = parseDisplayDate(artwork.displaydate)
+
+      if (!artworksByPeriod[period]) {
+        artworksByPeriod[period] = []
+      }
+      artworksByPeriod[period].push(item)
+    })
+
+    // Convert to array of { period, artworks } for templating
+    const groupedPeriods = Object.entries(artworksByPeriod)
+      .map(([period, artworks]) => ({
+        period,
+        artworks
+      }))
+      .sort((a, b) => a.period.localeCompare(b.period)) // optional sort
+
+      response.render('admin.liquid', {
+        likedArtworks,
+        artworksByPeriod: groupedPeriods
+      })
+    } catch (errorr) {
+      console.error('Error in /admin:', error)
+      response.status(500).send('Internal Server Error')
 });
 
 // POST for like
