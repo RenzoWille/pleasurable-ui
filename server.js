@@ -128,22 +128,21 @@ app.get('/tickets', async (req, res) => {
 })
 
 
-//Route naar admin
-app.get('/admin', async function (request, response){
+app.get('/admin', async function (request, response) {
+  try {
+    // Fetch liked artworks for user ID 5 
+    const likedArtworksURL = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5}&fields=id,fabrique_art_objects_id.id,fabrique_art_objects_id.title,fabrique_art_objects_id.artist,fabrique_art_objects_id.image,fabrique_art_objects_id.displayDate`
+    const likedArtworksFetch = await fetch(likedArtworksURL)
+    const likedArtworksJSON = await likedArtworksFetch.json()
 
-  // Haal gelikete artworks op van gebruiker met id 5 //verander id terug naar 3
-  const likedArtworksURL = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5}&fields=id,fabrique_art_objects_id.id,fabrique_art_objects_id.title,fabrique_art_objects_id.artist,fabrique_art_objects_id.image`
-  const likedArtworksFetch = await fetch(likedArtworksURL)
-  app.get('/admin', async function (request, response){
-  })
+    const likedArtworks = likedArtworksJSON.data
 
-  //Display dates -> fetch/filter artworks by period
-  // Group by displaydate (e.g., "1990s", "2000s", or exact year)
+    // Group by displaydate (e.g., "1990s", "2000s", or exact year)
     const artworksByPeriod = {}
 
-    likedArtworksFetch.forEach(item => {
+    likedArtworks.forEach(item => {
       const artwork = item.fabrique_art_objects_id
-      const period = parseDisplayDate(artwork.displaydate)
+      const period = parseDisplayDate(artwork.displayDate)
 
       if (!artworksByPeriod[period]) {
         artworksByPeriod[period] = []
@@ -159,14 +158,29 @@ app.get('/admin', async function (request, response){
       }))
       .sort((a, b) => a.period.localeCompare(b.period)) // optional sort
 
-      response.render('admin.liquid', {
-        likedArtworks,
-        artworksByPeriod: groupedPeriods
-      })
-    } catch (errorr) {
-      console.error('Error in /admin:', error)
-      response.status(500).send('Internal Server Error')
-});
+    response.render('admin.liquid', {
+      likedArtworks,
+      artworksByPeriod: groupedPeriods
+    })
+  } catch (error) {
+    console.error('Error in /admin:', error)
+    response.status(500).send('Internal Server Error')
+  }
+})
+
+
+function parseDisplayDate(displaydate) {
+  if (!displaydate) return 'Unknown'
+
+  const yearMatch = displaydate.match(/\d{4}/)
+  if (yearMatch) {
+    const year = parseInt(yearMatch[0], 10)
+    return `${Math.floor(year / 10) * 10}s` // e.g., 1995 => "1990s"
+  }
+
+  return displaydate.trim()
+}
+
 
 // POST for like
 

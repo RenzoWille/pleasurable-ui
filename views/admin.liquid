@@ -1,27 +1,67 @@
-<link rel="stylesheet" href="/public/stylesheet.css">
+{% render 'partials/head.liquid' %}
 
-<main>
-    <section class="header">
-        <h1>My liked Items</h1>
-    </section>
-    <section class="object-container">
-        <ul class="art-images">
-          {% for api in likedArtworks %}
-          <li class="image-container">
-            <a style="view-transition-name: 'image-{{ api.fabrique_art_objects_id.id }}';" href="/details/{{ api.fabrique_art_objects_id.id }}">
-              <article class="image-wrapper">
-                <div class="skeleton"></div> 
-                <img class="lazy-image" 
-                    src="https://fdnd-agency.directus.app/assets/{{ api.fabrique_art_objects_id.image }}"
-                    alt="art images for qatar museums">
-              </article>
-            </a>
-            <!--title, artist and year -->
-          </li>
-          {% endfor %}
-        </ul>
-      </section>
+{% render 'partials/header.liquid' %}
+<link rel="stylesheet" href="/stylesheet.css">
+<link rel="stylesheet" href="/styles/admin.css">
 
-      
-      
+<main data-layout="grid">
+  <section class="header">
+    <h1>My liked Items</h1>
+    <button class="timeline-toggle button">Toggle timeline</button>
+  </section>
+
+  <!-- Default layout: grid view -->
+  <section class="object-container">
+    <ul class="art-images">
+      {% for api in likedArtworks %}
+      <li class="image-container">
+        <a style="view-transition-name: 'image-{{ api.fabrique_art_objects_id.id }}';" href="/details/{{ api.fabrique_art_objects_id.id }}">
+          <article class="image-wrapper">
+            <div class="skeleton"></div> 
+            <img class="lazy-image" 
+                src="https://fdnd-agency.directus.app/assets/{{ api.fabrique_art_objects_id.image }}"
+                alt="art images for qatar museums">
+          </article>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- Timeline layout (hidden unless data-layout="timeline") -->
+  <section class="Time-line-container">
+
+    {% for periodGroup in artworksByPeriod %}
+
+    <div class="Time-period-container">
+      <h2 class="period-group">{{ periodGroup.period }}</h2>
+
+      <ul class="art-images">
+        {% for api in periodGroup.artworks %}
+        <li class="image-container">
+          <a style="view-transition-name: 'image-{{ api.fabrique_art_objects_id.id }}';" href="/details/{{ api.fabrique_art_objects_id.id }}">
+            <article class="image-wrapper">
+              <div class="skeleton"></div> 
+              <img class="lazy-image" 
+                  src="https://fdnd-agency.directus.app/assets/{{ api.fabrique_art_objects_id.image }}"
+                  alt="art images for qatar museums">
+            </article>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </section>
 </main>
+
+<script>
+  const toggleButton = document.querySelector('.timeline-toggle');
+  const main = document.querySelector('main');
+
+  toggleButton.addEventListener('click', () => {
+    const current = main.getAttribute('data-layout');
+    main.setAttribute('data-layout', current === 'grid' ? 'timeline' : 'grid');
+  });
+</script>
+
