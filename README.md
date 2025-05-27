@@ -143,7 +143,54 @@ De taalswitch wordt via de backend uitgevoerd. De juiste taalversie van de conte
 
 ---
 
-### Tessa 
+### Tessa Admin page met liked content + timeline
+Mijn deel van de opdracht was het maken van de admin page en daarbij een timeline die de objecten fetcht en filtert op tijd periode. Op deze pagina kan de gebruiker kiezen welke layout te zien is doormiddel van een button die een layout switch triggert. 
+![image](https://github.com/user-attachments/assets/e3398904-d99e-42fb-ab3d-0af4c9a08f25)
+![image](https://github.com/user-attachments/assets/e745830a-0387-4e62-a079-5386b16348d7)
+
+Allereerst heb ik de liked content van ID:5 gefetched vanuit de API in de server.JS en dan in de liquid vraag ik die data op door middel van {% for api in likedArtworks %}.
+Daarna voor de timeline heb ik parse gebruikt om te voorkomen dat ook de niet specifieke data (zoals circa.2000bc, 1210-1215) mee komt tijdens het filteren.
+
+ ```
+    // Group by displaydate (e.g., "1990s", "2000s", or exact year)
+    const artworksByPeriod = {}
+
+    likedArtworks.forEach(item => {
+      const artwork = item.fabrique_art_objects_id
+      const period = parseDisplayDate(artwork.displayDate)
+
+      if (!artworksByPeriod[period]) {
+        artworksByPeriod[period] = []
+      }
+      artworksByPeriod[period].push(item)
+    })
+
+   // Convert to array of { period, artworks } for templating
+    const groupedPeriods = Object.entries(artworksByPeriod)
+      .map(([period, artworks]) => ({
+        period,
+        artworks
+      }))
+      .sort((a, b) => a.period.localeCompare(b.period))
+```
+
+En hierbij heb ik ook een helper function gemaakt voor de grouping labels. 
+
+```
+function parseDisplayDate(displaydate) {
+  if (!displaydate) return 'Unknown'
+
+  const yearMatch = displaydate.match(/\d{4}/)
+  if (yearMatch) {
+    const year = parseInt(yearMatch[0], 10)
+    return `${Math.floor(year / 10) * 10}s` // e.g., 1995 => "1990s"
+  }
+
+  return displaydate.trim()
+}
+
+```
+
 
 
 ### Renzo Home page & Server build
