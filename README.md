@@ -112,7 +112,7 @@ app.get('/', async (req, res) => {
 
 ---
 
-### Karima
+### Karima Acquisition page, Arabische switch en succes pagina
 
 ### Loading State
 Voordat het formulier wordt verzonden krijg je een loading state te zien. De opacity van de button wordt verlaagd en er komt een zandloper emoji tevoorschijn. De loading state is gecodeerd met behulp van javascript en CSS.
