@@ -188,7 +188,7 @@ app.post('/like-artwork/:id', async function (request, response) {
   // console.log("we hebben een post " + request.params.id)
 
   // Hier wil je een fetch naar Directus waarmee je een like oplsaat die hoort bij een artwork
-  const postLikeUrl = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":1,"fabrique_art_objects_id":[id][_eq]=${request.params.id}`
+  const postLikeUrl = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5,"fabrique_art_objects_id":[id][_eq]=${request.params.id}`
 //   console.log("postLikeUrl " + postLikeUrl)
 
   // Post naar database
@@ -211,7 +211,7 @@ app.post('/like-artwork/:id', async function (request, response) {
 // DELETE for like
 
 app.post('/unlike-artwork/:id', async function (request, response) {
-  const likedArtobject = await fetch(`https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":3,"fabrique_art_objects_id":${request.params.id}}`)
+  const likedArtobject = await fetch(`https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5,"fabrique_art_objects_id":${request.params.id}}`)
   const likedArtobjectResponseJSON = await likedArtobject.json()
   const likedArtobjectID = likedArtobjectResponseJSON.data[0].id
   console.log(likedArtobjectID)
