@@ -207,7 +207,7 @@ app.post('/acquisition', async function (request, response) {
       }, //request met post, met headers geef je aan wat er is meegegeven, je geeft informatie over wat je in de request heb meegegeven.
     });
 
-    response.redirect(303, '/en/succesfull') //Na het versturen van de gegevens naar de API wordt de gebruiker doorgestuurd naar de pagina /succesfull
+    response.redirect(303, '/en/succes') //Na het versturen van de gegevens naar de API wordt de gebruiker doorgestuurd naar de pagina /succesfull
 
   })
 
@@ -225,7 +225,7 @@ app.post('/acquisition', async function (request, response) {
       },
     });
 
-    response.redirect(303, '/ar/succesfull')
+    response.redirect(303, '/ar/succes')
   })
 
 
