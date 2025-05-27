@@ -1,13 +1,37 @@
+
 <!-- Overlay dropdown menu, pas zichtbaar bij klik op MENU -->
 <div id="dropdown-menu" class="dropdown-wrapper">
   <main class="layout">
 
-    <!-- Left image -->
-    <section class="men-image">
-      <h1 class="visually-hidden">Welcome to Qatar Museums</h1>
-      <img src="assets/qatar.jpg" alt="Modern art sculpture at Qatar Museums" />
-      <p>Find out what’s on at Qatar Museums</p>
-    </section>
+   <!-- Left image -->
+<section class="men-image">
+  <h1 class="visually-hidden">Welcome to Qatar Museums</h1>
+
+  <picture>
+    <!-- AVIF format -->
+    <source 
+      srcset="assets/qatar.avif"
+      sizes="(max-width: 768px) 100vw, 50vw"
+      type="image/avif">
+
+    <!-- WebP format -->
+    <source 
+      srcset="assets/qatar.webp"
+      sizes="(max-width: 768px) 100vw, 50vw"
+      type="image/webp">
+
+    <!-- JPG fallback -->
+    <img 
+      src="assets/qatar.jpg" 
+      alt="Modern art sculpture at Qatar Museums"
+      width="800"
+      height="600"
+      loading="lazy"
+      style="width: 100%; height: 100%; object-fit: cover;">
+  </picture>
+
+  <p>Find out what’s on at Qatar Museums</p>
+</section>
 
     <!-- Right content -->
     <section class="nav-content">
@@ -22,7 +46,7 @@
           </svg>
           VENUES
         </a>
-        <span class="arabic">العربية</span>
+        <a href="/" class="arabic">العربية</a>
         <a href="#" class="close-btn">
           <svg fill="currentColor" height="18" viewBox="0 0 30 30" width="18" xmlns="http://www.w3.org/2000/svg">
             <path d="m20.7 10.8-1.5-1.5-4.2 4.3-4.2-4.3-1.5 1.5 4.3 4.2-4.3 4.2 1.5 1.5 4.2-4.3 4.2 4.3 1.5-1.5-4.3-4.2z"></path>
@@ -31,40 +55,51 @@
         </a>
       </nav>
 
-
-      
-      <!-- Main navigation columns -->
-      <section class="nav-columns">
-        <h2 class="visually-hidden">Explore Sections</h2>
-      
-        <article class="column">
-          <h3>
-            <span class="arabic">قصصنا</span>
-            <span class="english">STORIES</span>
-          </h3>
-        </article>
-      
-        <article class="column">
-          <h3>
-            <span class="arabic">الفعاليات</span>
-            <span class="english">WHAT’S ON</span>
-          </h3>
-        </article>
-      
-         <article class="column">
-          <h3>
-            <span class="arabic">الــمـــقــتــنــيـات</span>
-            <span class="english">COLLECTIONS</span>
-          </h3>
-        </article>
-      
-        <article class="column">
-          <h3>
-            <span class="arabic">زيارة</span>
-            <span class="english">VISIT</span>
-          </h3>
-        </article>
-      </section>
+  <!-- Main navigation columns -->
+  <section class="nav-columns">
+    <h2 class="visually-hidden">Explore Sections</h2>
+  
+    <article class="column">
+      <div class="hover-overlay"></div>
+      <h3>
+        <a href="/">
+        <span class="arabic">قـصــصــنـا</span>
+        <span class="english">STORIES</span>
+        </a>
+      </h3>
+    </article>
+  
+    <article class="column">
+      <div class="hover-overlay"></div>
+      <h3>
+        <a href="/">
+        <span class="arabic">الـفـعــالــيــات</span>
+        <span class="english">WHAT’S ON</span>
+        </a>
+      </h3>
+    </article>
+  
+    <article class="column">
+      <div class="hover-overlay"></div>
+      <h3>
+        <a href="/">
+        <span class="arabic">الــمـــقــتــنــيـات</span>
+        <span class="english">COLLECTIONS</span>
+        </a>
+      </h3>
+    </article>
+  
+    <article class="column">
+      <div class="hover-overlay"></div>
+      <h3>
+      <a href="/">
+        <span class="arabic">زيـــارة</span>
+        <span class="english">VISIT</span>
+      </a>
+      </h3>
+    </article>
+  </section>
+  
       
 
       <!-- Additional links -->
@@ -101,29 +136,27 @@
       
         <!-- Qatar Museums logo -->
         <a href="/" class="logo-dropdown-footer">
-          <picture>
-            <!-- AVIF format -->
-            <source 
-              srcset="/assets/log.avif"
-              sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px"
-              type="image/avif">
+        <picture>
+          <!-- AVIF format -->
+          <source 
+            srcset="/assets/log.avif"
+            type="image/avif">
       
-            <!-- WebP format -->
-            <source 
-              srcset="/assets/log.webp"
-              sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px"
-              type="image/webp">
+          <!-- WebP format -->
+          <source 
+            srcset="/assets/log.webp"
+            type="image/webp">
       
-            <!-- PNG fallback -->
-            <img 
-              src="/assets/log.png" 
-              alt="Qatar Museums logo" 
-              width="200" 
-              height="80" 
-              loading="lazy"
-              sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px">
-          </picture>
-        </a>
+          <!-- PNG fallback -->
+          <img 
+            src="/assets/log.png" 
+            alt="Qatar Museums logo" 
+            width="200" 
+            height="80"
+            loading="lazy">
+        </picture>
+      </a>
+      
       </div>
       
       </section>

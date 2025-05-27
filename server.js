@@ -57,23 +57,25 @@ app.get('/en', async function (request, response) {
 
 // Route voor de homepagina in het arabisch
 app.get('/ar', async function (request, response) {
-  const apiResponse = await fetch('https://fdnd-agency.directus.app/items/fabrique_art_objects')
+  const apiResponse = await fetch(`https://fdnd-agency.directus.app/items/fabrique_art_objects/?fields=title,id,image,titleAR,summaryAR,objectNameAR`);
   const apiResponseJSON = await apiResponse.json();
 
   response.render("index-ar.liquid", {
-      artwork: apiResponseJSON.data,
+      artworkData: apiResponseJSON.data
    })
 })
 
 // Detail-page
-app.get('/details/:id', async function (request, response) {
+app.get('/:lang/details/:id', async function (request, response) {
   const artworkId = request.params.id;
-  const apiResponse = await fetch(`https://fdnd-agency.directus.app/items/fabrique_art_objects/${artworkId}?fields=title,image,summary,objectNumber,site,displayDate,artist,materials,recordType`
-);
-
+  const apiResponse = await fetch(`https://fdnd-agency.directus.app/items/fabrique_art_objects/${artworkId}?fields=title,id,image,summary,artist,location,displayDate,materials,techniques,objectNumber,recordType,titleAR,summaryAR,objectNameAR`);
+  const langId = request.params.lang;
   const apiResponseJSON = await apiResponse.json();
 
-  response.render('details.liquid', {object: apiResponseJSON.data});
+  response.render('details.liquid', {
+    object: apiResponseJSON.data,
+    lang: langId
+  });
 })
 
 app.get('/:lang/acquisition', async function (request, response) {

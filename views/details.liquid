@@ -2,96 +2,193 @@
 
 {% render 'partials/header.liquid' %}
 
+{% render 'partials/dropdown.liquid' %}
+
 <body>  
+{% if lang == 'en' %}
 
-  <section class="hero-img">
+    <section class="hero-img">
 
-    <a href="/" class="back-button">BACK</a>
+        <a href="/" class="back-button">BACK</a>
 
-    {% if object.image %}
-        <img class="object-id" style="view-transition-name: artwork-{{ artwork.image.id }} ;" src="https://fdnd-agency.directus.app/assets/{{ object.image }}" alt="images of object in qatar " width="300px">        
+        {% if object.image %}
+            <img class="object-id" style="view-transition-name: artwork-{{ artwork.image.id }} ;" src="https://fdnd-agency.directus.app/assets/{{ object.image }}" alt="images of object in qatar " width="300px">        
 
-    {% else %}
-        <p>No image availible</p>
-    {% endif %}
+        {% else %}
+            <p>No image availible</p>
+        {% endif %}
     
-</section>
+    </section>
 
-<section class="main-objectpagina">
+    <section class="main-objectpagina">
 
-<div class="object-title">
-    <h1 class="h1-title">{{ object.title }}</h1>
-</div>
+        <article class="object-title">
+            <h1 class="h1-title">{{ object.title }}</h1>
+            
+        </article>
 
-<div class="info-tekst">
-    <img src="/assets/blauwe-blok.svg" alt="blauwe-blok">
-    <p class="tekst-medium">Museum of Islamic Art</p>
-</div>
+        <div class="info-tekst">
+            <img src="/assets/blauwe-blok.svg" alt="blauwe-blok">
+            <p class="tekst-medium">Museum of Islamic Art</p>
+        </div>
 
-<div class="info-object">
-    <p class="tekst-bold">Full title:</p>       <p class="tekst-medium">{{ object.title }}</p>
-    <p class="tekst-bold">Artist:</p>           <p class="tekst-medium">{{ object.artist }}</p>
-    <p class="tekst-bold">Location created:</p> <p class="tekst-medium">{{ object.site }}</p>
-    <p class="tekst-bold">Period:</p>           <p class="tekst-medium">{{ object.displayDate }}</p>
-    <p class="tekst-bold">Materials:</p>        <p class="tekst-medium">{{ object.materials }}</p>
-    <p class="tekst-bold">Object nummer:</p>    <p class="tekst-medium">{{ object.objectNumber }}</p>
-    <p class="tekst-bold">Record type:</p>      <p class="tekst-medium">{{ object.recordtype }}</p>
-</div>
+        <div class="info-object">
+            <p class="tekst-bold">Full title:</p>       <p class="tekst-medium">{{ object.title }}</p>
+            <p class="tekst-bold">Artist:</p>           <p class="tekst-medium">{{ object.artist }}</p>
+            <p class="tekst-bold">Location created:</p> <p class="tekst-medium">{{ object.site }}</p>
+            <p class="tekst-bold">Period:</p>           <p class="tekst-medium">{{ object.displayDate }}</p>
+            <p class="tekst-bold">Materials:</p>        <p class="tekst-medium">{{ object.materials }}</p>
+            <p class="tekst-bold">Object nummer:</p>    <p class="tekst-medium">{{ object.objectNumber }}</p>
+            <p class="tekst-bold">Record type:</p>      <p class="tekst-medium">{{ object.recordtype }}</p>
+            <p class="tekst-bold">Acquisition form:</p> <p class="tekst-medium">Interested in donating or selling an artwork to Qatar Museums? Submit your information through <a href="/en/acquisition"><u>this</u></a> acquisition proposal form.</p>
 
-<div class="object-summary">
+        </div>
+
+        <div class="object-summary">
+            
+            {% if object.summary %}
+                <h2 class="tekst-medium">{{ object.summary }}</h2>
+
+            {% else  %}
+                <p class="tekst-medium"> No summary available</p>
+            {% endif %}    
+
+            <p class="tekst-bold">Share with a friend</p>
+
+            <div class="share-icons">
+                <a href="" class="icon-links"><img src="/assets/paperclip-icoon.png" alt="paperclip-icoon"></a>
+                <a href="" class="icon-links"><img src="/assets/email-icoon.png" alt="email-icoon"></a>
+                <a href="" class="icon-links"><img src="/assets/linkedin-icoon.png" alt="linkedin-icoon"></a>
+                <a href="" class="icon-links"><img src="/assets/facebook-icoon.png" alt="facebook-icoon"></a>
+                <a href="" class="icon-links"><img src="/assets/Union.png" alt="x-icoon"></a>
+            </div>
+        </div> 
+    </section>
+
+    <section class="suggesties"> 
+        <h2 class="h2-suggesties">You may also like</h2>
+
+        <ul class="ul-suggesties">
+            <li class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 11.png">
+                <p class="tekst-medium">Egypt,Syria</p>
+                <p class="tekst-bold">Inkwell pot</p>
+            </li>
+
+            <li  class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 19.png">
+                <p class="tekst-medium">Syria, Iraq</p>
+                <p class="tekst-bold">Tray Stand</p>
+            </li>
+
+                    
+            <li  class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 12.png">
+                <p class="tekst-medium">Iraq</p>
+                <p class="tekst-bold">Abbasid Splash Ware Bowl</p>
+            </li>
+
+            <li  class="li-suggesties">            
+                <img class="suggestie-img" src="/assets/image 18.png">
+                <p class="tekst-medium">Iznik</p>
+                <p class="tekst-bold">Flask</p>
+            </li>
+        </ul>
+    </section>
+
+<!-- Arabische versie --> 
+{% elsif lang == 'ar'%}
+           
+    <section class="hero-img">
+
+        <a href="/" class="back-button">العودة</a>
+
+        {% if object.image %}
+            <img class="object-id" style="view-transition-name: artwork-{{ artwork.image.id }} ;" src="https://fdnd-agency.directus.app/assets/{{ object.image }}" alt="صورة للكائن في قطر" width="300px">        
+
+        {% else %}
+            <p>لا توجد صورة متاحة</p>
+        {% endif %}
+
+    </section>
+
+    <section class="main-objectpagina">
+
+        <article class="object-title">
+            <h1 class="h1-title">{{ object.titleAR | default: 'لا يوجد عنوان '}}</h1>
+            <p class="summary-ar">{{ object.summaryAR }}</p>
+        </article>
+
+        <div class="info-tekst">
+            <img src="/assets/blauwe-blok.svg" alt="كتلة زرقاء">
+            <p class="tekst-medium">متحف الفن الإسلامي</p>
+        </div>
+
+        <div class="info-object">
+            <p class="tekst-bold">العنوان الكامل:</p>        <p class="tekst-medium">{{ object.titleAR }}</p>
+            <p class="tekst-bold">الفنان:</p>                <p class="tekst-medium">{{ object.artist }}</p>
+            <p class="tekst-bold">مكان الإنشاء:</p>          <p class="tekst-medium">{{ object.site }}</p>
+            <p class="tekst-bold">الفترة الزمنية:</p>        <p class="tekst-medium">{{ object.displayDate }}</p>
+            <p class="tekst-bold">المواد:</p>                <p class="tekst-medium">{{ object.materials }}</p>
+            <p class="tekst-bold">رقم الكائن:</p>            <p class="tekst-medium">{{ object.objectNumber }}</p>
+            <p class="tekst-bold">نوع السجل:</p>             <p class="tekst-medium">{{ object.recordtype }}</p>
+            <p class="tekst-bold">نموذج الاستحواذ:</p>       <p class="tekst-medium">هل أنت مهتم بالتبرع أو بيع عمل فني لمتاحف قطر؟ قدّم معلوماتك من خلال <a href="/ar/acquisition"><u>هذا</u></a> النموذج الخاص باقتراح الاستحواذ.</p>
+        </div>
+
+        <div class="object-summary">
+            
+               
+
+            <p class="tekst-bold">شارك مع صديق</p>
+
+            <div class="share-icons">
+                <a href="" class="icon-links"><img src="/assets/paperclip-icoon.png" alt="رمز مشبك الورق"></a>
+                <a href="" class="icon-links"><img src="/assets/email-icoon.png" alt="رمز البريد الإلكتروني"></a>
+                <a href="" class="icon-links"><img src="/assets/linkedin-icoon.png" alt="رمز لينكدإن"></a>
+                <a href="" class="icon-links"><img src="/assets/facebook-icoon.png" alt="رمز فيسبوك"></a>
+                <a href="" class="icon-links"><img src="/assets/Union.png" alt="رمز إكس (تويتر سابقًا)"></a>
+            </div>
+        </div> 
+    </section>
+
+    <section class="suggesties"> 
+        <h2 class="h2-suggesties">قد يعجبك أيضًا</h2>
+
+        <ul class="ul-suggesties">
+            <li class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 11.png">
+                <p class="tekst-medium">مصر، سوريا</p>
+                <p class="tekst-bold">محبرة</p>
+            </li>
+
+            <li class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 19.png">
+                <p class="tekst-medium">سوريا، العراق</p>
+                <p class="tekst-bold">حامل صينية</p>
+            </li>
+
+            <li class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 12.png">
+                <p class="tekst-medium">العراق</p>
+                <p class="tekst-bold">وعاء خزفي من العصر العباسي</p>
+            </li>
+
+            <li class="li-suggesties">
+                <img class="suggestie-img" src="/assets/image 18.png">
+                <p class="tekst-medium">إزنيق</p>
+                <p class="tekst-bold">قارورة</p>
+            </li>
+        </ul>
+    </section>
+{% else %}
+<section class="title">
+    <h1 class="title-acquisition">Page not found</h1>
     
-    {% if object.summary %}
-        <h2 class="tekst-medium">{{ object.summary }}</h2>
+    <p class="paragraph-acquisition">Looks like this page doesn’t exist in this language.</p>
 
-    {% else  %}
-        <p class="tekst-medium"> No summary available</p>
-    {% endif %}    
-
-<p class="tekst-bold">Share with a friend</p>
-
-<div class="share-icons">
-    <a href="" class="icon-links"><img src="/assets/paperclip-icoon.png" alt="paperclip-icoon"></a>
-    <a href="" class="icon-links"><img src="/assets/email-icoon.png" alt="email-icoon"></a>
-    <a href="" class="icon-links"><img src="/assets/linkedin-icoon.png" alt="linkedin-icoon"></a>
-    <a href="" class="icon-links"><img src="/assets/facebook-icoon.png" alt="facebook-icoon"></a>
-    <a href="" class="icon-links"><img src="/assets/Union.png" alt="x-icoon"></a>
-</div>
-</div> 
-</section>
-
-<section class="suggesties"> 
-    <h2 class="h2-suggesties">You may also like</h2>
-
-    <ul class="ul-suggesties">
-        <li class="li-suggesties">
-            <img class="suggestie-img" src="/assets/image 11.png">
-            <p class="tekst-medium">Egypt,Syria</p>
-            <p class="tekst-bold">Inkwell pot</p>
-        </li>
-
-        <li  class="li-suggesties">
-            <img class="suggestie-img" src="/assets/image 19.png">
-            <p class="tekst-medium">Syria, Iraq</p>
-            <p class="tekst-bold">Tray Stand</p>
-        </li>
-
-                 
-        <li  class="li-suggesties">
-            <img class="suggestie-img" src="/assets/image 12.png">
-            <p class="tekst-medium">Iraq</p>
-            <p class="tekst-bold">Abbasid Splash Ware Bowl</p>
-        </li>
-
-        <li  class="li-suggesties">            
-            <img class="suggestie-img" src="/assets/image 18.png">
-            <p class="tekst-medium">Iznik</p>
-            <p class="tekst-bold">Flask</p>
-        </li>
-    </ul>
+    <a class="return-homepage" href="/">Homepage</a>
 
 </section>
-
-
-
+{% endif %}
 
 </body>

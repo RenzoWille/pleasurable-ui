@@ -98,27 +98,28 @@ form input[type="text"] {
 }
 
 .submit-button-en {
-    display: flex;
-    position: relative;
-    border: 2px solid var(--color-black);
-    font-family: var(--font-default);
-    background-color: var(--color-yellow);
-    padding: 1em 1.5em 1em 1.5em;
-    text-transform: uppercase;
-    font-size: var(--font-size-s);
-    color: var(--color-black);
-    font-weight: 550;
-    margin-top: 3em;
-        &:hover {
-            background-color: var(--color-default);
-            color: var(--color-accent);
-            transition-timing-function: ease-in;
-            transition: .5s;
-        }
-        @media (min-width: 680px) {
-            padding: 1.3em 1.8em 1.3em 1.8em;
-
-        }
+        display: flex;
+        position: relative;
+        border: 2px solid var(--color-black);
+        font-family: var(--font-default);
+        background-color: var(--color-yellow);
+        padding: 1em 1.5em;
+        text-transform: uppercase;
+        font-size: var(--font-size-s);
+        color: var(--color-black);
+        font-weight: 550;
+        margin-top: 3em;
+        background-image: linear-gradient(to top, var(--color-yellow) 50%, var(--color-black) 50%); /* (gradient) van onder naar boven:*/
+        background-size: 100% 200%;
+        background-position: bottom; /*kleur begint vanaf beneden*/
+        transition: background-position 0.5s ease-in, color 0.5s ease-in; /* transitie voor de overgang van de kleuren */ 
+  &:hover {
+        background-position: top;
+        color: var(--color-white);
+    }
+  @media (min-width: 680px) {
+        padding: 1.3em 1.8em;
+  }
 }
 
 .paragraph-acquisition-ar {

@@ -1,0 +1,27 @@
+{% render 'partials/head.liquid' %}
+{% render 'partials/header.liquid' %}
+{% render 'partials/dropdown.liquid' %}
+
+
+<ul class="art-images">
+  {% for api in artworkData %}
+
+    <li class="image-container">
+
+        <div class="post-title">
+            <h1>{{ api.titleAR | default: 'لا يوجد عنوان ' }}</h1>
+            <a href="/ar/details/{{ api.id }}">شاهد المزيد</a>
+        </div>
+
+        <a style="view-transition-name: image-{{ api.id }};" href="/ar/details/{{ api.id }}">
+            <div class="image-wrapper">
+            <img
+                src="https://fdnd-agency.directus.app/assets/{{ api.image }}"
+                alt="صور الفن لمتاحف قطر"
+                class="image-home-ar">
+            </div>
+        </a>
+
+    </li>
+  {% endfor %}
+</ul>

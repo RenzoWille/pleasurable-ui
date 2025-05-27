@@ -99,6 +99,13 @@
     }
 }
 
+.summary-ar {
+    font-family: var(--arabic-font);
+    font-size: var(--font-size-m);
+    padding: 0 2em 2em 1em;
+}
+
+
 .share-icons {
     display: flex;
     justify-content: space-between;
@@ -113,6 +120,7 @@
 .tekst-medium {
     font-family: var(--font-en-light);
     font-weight:lighter;
+    padding: .5em;
 }
 
 .tekst-bold {
@@ -123,6 +131,7 @@
 .h1-title {
     font-family: var(--font-en-regular);
     font-weight: normal;
+    padding: .5em;
 }
 
 

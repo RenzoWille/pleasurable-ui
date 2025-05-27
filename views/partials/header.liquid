@@ -4,32 +4,27 @@
 <header>
   <nav class="navbar">
 
-    <!-- Qatar Museums logo -->
-    <a href="/" class="logo">
-      <picture>
-        <!-- AVIF format -->
-        <source 
-          srcset="/assets/logo.avif"
-          sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px"
-          type="image/avif">
-    
-        <!-- WebP format -->
-        <source 
-          srcset="/assets/logo.webp"
-          sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px"
-          type="image/webp">
-    
-        <!-- PNG fallback -->
-        <img 
-          src="/assets/logo.png" 
-          alt="Qatar Museums Logo" 
-          width="200" 
-          height="80" 
-          loading="lazy"
-          sizes="(max-width: 400px) 150px, (max-width: 768px) 180px, 200px"
-        >
-      </picture>
-    </a>
+     <!-- Qatar Museums logo -->
+     <a href="/" class="logo">
+     <picture>
+       <!-- AVIF format -->
+       <source 
+         srcset="/assets/logo.avif"
+         type="image/avif">
+   
+       <!-- WebP format -->
+       <source 
+         srcset="/assets/logo.webp"
+         type="image/webp">
+   
+       <!-- PNG fallback -->
+       <img 
+         src="/assets/logo.png" 
+         alt="Qatar Museums Logo" 
+         width="200" 
+         height="80">
+     </picture>
+   </a>
 
     <!-- Main navigation links: includes multilingual labels -->
     <ul class="nav-links">
@@ -79,7 +74,7 @@
         </a>
       </li>
       <li>
-        <a href="?lang=ar" lang="ar">العربية</a>
+        <a href="/ar" lang="ar"> العربية</a>
       </li>
     </ul>
 

@@ -1,7 +1,40 @@
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Cairo:wght@400;700&display=swap');
+
+/* --- Tajawal --- */
+@font-face {
+    font-family: 'Tajawal';
+    src: url('/fonts/tajawal-v11-latin-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Tajawal';
+    src: url('/fonts/tajawal-v11-latin-700.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  /* --- Cairo --- */
+  @font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/cairo-v28-arabic-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/cairo-v28-arabic-700.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
 
 
 /* English light */

@@ -24,7 +24,7 @@
         padding: 0.5rem 2rem;
         height: 4rem;
         width: 100%;
-        border-bottom: 0.1rem solid var(--color-black);
+        border-bottom: 0.1rem solid rgb(118, 118, 118);
         position: fixed;
         top: 0;
         background-color: var(--color-white);
@@ -76,13 +76,15 @@
     .nav-links {
         list-style: none;
         display: flex;
-        flex-grow: 1;
-        justify-content: flex-start;
+        justify-content: flex-end; 
         gap: 1.4rem;
         font-weight: bold;
         font-size: var(--font-size-base);
         align-items: center;
-        margin-left: 270px;
+        padding-left: 11rem; 
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
     }
 
     .nav-links a {
@@ -107,23 +109,23 @@
 
 
     /* TICKETS button */
-.highlight {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    justify-content: center;
-    background-color: var(--hilight-color);
-    padding: 0.9rem 0.9rem;
-    font-size: var(--font-size-base);
-    font-family: var( --font-en-bold);
-    border: 1px solid var(--color-black);
-    width: auto;
-    height: auto;
-    text-transform: uppercase;
-    line-height: var(--line-height-heading);
-}
+    .highlight {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        justify-content: center;
+        background-color: var(--hilight-color);
+        padding: 0.9rem 0.9rem;
+        font-size: var(--font-size-base);
+        font-family: var( --font-en-bold);
+        border: 1px solid var(--color-black);
+        width: auto;
+        height: auto;
+        text-transform: uppercase;
+        line-height: var(--line-height-heading);
+    }
 
-.highlight:hover {
+    .highlight:hover {
     background-color: var(--color-black);
     color: var(--color-white);
 }
@@ -140,21 +142,19 @@
     cursor: pointer;
 }
 
-
 .hamburger svg {
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 1.6rem;
+    height: 1.6rem;
     stroke: var(--color-black);
-    transition: transform 0.3s ease;
-}
+    vertical-align: middle;
+  }
 
 /* Desktop */
 @media (min-width: 1024px) {
     .menu-container {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-left: 1rem;
+        margin-left: 0rem;
     }
 
     .menu-text {
@@ -163,8 +163,9 @@
         color: var(--color-black);
         display: flex;
         align-items: center;
+        line-height: 1;
+        margin-left: 0.2rem;
     }
-
 }
 
 /* Desktop Member, Venue & Arabic Link Styles */
@@ -208,9 +209,12 @@
 
 /* Desktop focus styles */
 @media (min-width: 1024px) {
-    .nav-links a:focus,
     .hamburger:focus {
-        outline: 3px solid #ffcc00;
+        outline: 3px solid #ffffff;
+    }
+
+    .nav-links a:focus{
+        outline: 3px solid #9bc9e3;
     }
 
     .nav-right {
@@ -231,9 +235,4 @@
     }
 }
 
-/* Focus styling for accessibility */
-.nav-links a:focus,
-.hamburger:focus {
-    outline: 3px solid #ffcc00;
-}
 }

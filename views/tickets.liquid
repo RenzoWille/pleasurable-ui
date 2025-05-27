@@ -23,14 +23,10 @@
             <article class="museum-card">
                 <!-- 1) Radio + Info -->
                 <div class="museum-info">
-                    <input type="radio"
-                           name="museum"
-                           id="museum-{{ museum.id }}" />
-
+                    <input type="radio" name="museum" id="museum-{{ museum.id }}" />
                     <label for="museum-{{ museum.id }}">
                         <h3>{{ museum.name }}</h3>
                         <p>{{ museum.description }}</p>
-
                         {% if museum.exhibitions %}
                             <strong>Current Exhibitions:</strong>
                             <ul>
@@ -44,12 +40,10 @@
 
                 <!-- 2) Image -->
                 <div class="museum-image">
-                    <img src="{{ museum.image }}"
-                         alt="Photo of {{ museum.name }}"
-                         loading="lazy" />
+                    <img src="{{ museum.image }}" alt="Photo of {{ museum.name }}" loading="lazy" />
                 </div>
 
-                <!-- 3) Ticket Table (hidden until selected) -->
+                <!-- 3) Ticket Table -->
                 <div class="ticket-table-wrapper">
                     <table class="ticket-table">
                         <thead>
@@ -72,9 +66,7 @@
                                 </td>
                                 <td class="ticket-qty-cell">
                                     <button class="decrease">–</button>
-                                    <input type="number"
-                                           min="0"
-                                           value="0"
+                                    <input type="number" min="0" value="0"
                                            data-price="{{ ticket.price }}"
                                            class="ticket-qty" />
                                     <button class="increase">+</button>
@@ -92,56 +84,86 @@
     <aside class="cart-summary">
         <h3>Your Cart</h3>
         <p>Total: QAR 0</p>
-        <button class="next-step">NEXT STEP</button>
+
+        <!-- Next Step button with ripple + spinner -->
+        <button type="button" id="submitBtn" class="next-step">
+            <span class="ripple-container"></span>
+            <span class="label">NEXT STEP</span>
+            <span class="spinner" aria-hidden="true"></span>
+        </button>
     </aside>
+
 </main>
 
-
-{% comment %}JS{% endcomment %}
-
 <script>
-    // + / – buttons
+    // Quantity +/- and subtotal logic (unchanged)
     document.querySelectorAll('.increase').forEach(btn =>
         btn.addEventListener('click', () => {
-            const input = btn.previousElementSibling
-            input.value = +input.value + 1
-            updateSubtotal(input)
+            const input = btn.previousElementSibling;
+            input.value = +input.value + 1;
+            updateSubtotal(input);
         })
-    )
+    );
     document.querySelectorAll('.decrease').forEach(btn =>
         btn.addEventListener('click', () => {
-            const input = btn.nextElementSibling
-            input.value = Math.max(0, +input.value - 1)
-            updateSubtotal(input)
+            const input = btn.nextElementSibling;
+            input.value = Math.max(0, +input.value - 1);
+            updateSubtotal(input);
         })
-    )
+    );
     function updateSubtotal(input) {
-        const price = parseFloat(input.dataset.price)
-        const qty   = +input.value
-        const row   = input.closest('tr')
-        row.querySelector('.subtotal')
-            .textContent = `QAR ${price * qty}`
-        updateCartTotal()
+        const price = parseFloat(input.dataset.price), qty = +input.value;
+        const row = input.closest('tr');
+        row.querySelector('.subtotal').textContent = `QAR ${price * qty}`;
+        updateCartTotal();
     }
     function updateCartTotal() {
-        let total = 0
-        document.querySelectorAll('.ticket-qty').forEach(input => {
+        let total = 0;
+        document.querySelectorAll('.ticket-qty').forEach(input =>
             total += parseFloat(input.dataset.price) * +input.value
-        })
-        const cart = document.querySelector('.cart-summary')
-        cart.querySelector('p')
-            .textContent = `Total: QAR ${total}`
+        );
+        document.querySelector('.cart-summary p')
+            .textContent = `Total: QAR ${total}`;
     }
     // Show table only when radio is checked
     document.querySelectorAll('.museum-card input[type=radio]').forEach(radio => {
         radio.addEventListener('change', () => {
             document.querySelectorAll('.ticket-table-wrapper')
-                .forEach(w => w.classList.remove('visible'))
+                .forEach(w => w.classList.remove('visible'));
             radio.closest('.museum-card')
                 .querySelector('.ticket-table-wrapper')
-                .classList.add('visible')
-        })
-    })
+                .classList.add('visible');
+        });
+    });
+
+    // ── Ripple + Spinner Micro-interaction ─────────────────────────
+    const btn     = document.getElementById('submitBtn');
+    const label   = btn.querySelector('.label');
+    const spinner = btn.querySelector('.spinner');
+    const rippleC = btn.querySelector('.ripple-container');
+
+    btn.addEventListener('pointerdown', e => {
+        // create one-off ripple element
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const d = Math.max(btn.clientWidth, btn.clientHeight);
+        r.style.width = r.style.height = d + 'px';
+        const rect = btn.getBoundingClientRect();
+        r.style.left = (e.clientX - rect.left - d/2) + 'px';
+        r.style.top  = (e.clientY - rect.top  - d/2) + 'px';
+        rippleC.appendChild(r);
+        r.addEventListener('animationend', () => r.remove());
+    });
+
+    btn.addEventListener('pointerup', async () => {
+        // show spinner, hide label
+        btn.classList.add('is-loading');
+        // simulate load
+        await new Promise(r => setTimeout(r, 1000));
+        // restore
+        btn.classList.remove('is-loading');
+        // TODO: trigger your "go to next step" here
+    });
 </script>
 
 {% include 'partials/foot.liquid' %}
