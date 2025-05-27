@@ -120,16 +120,59 @@ app.get('/tickets', async (req, res) => {
 })
 
 
+app.get('/admin', async function (request, response) {
+  try {
+    // Fetch liked artworks for user ID 5 
+    const likedArtworksURL = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5}&fields=id,fabrique_art_objects_id.id,fabrique_art_objects_id.title,fabrique_art_objects_id.artist,fabrique_art_objects_id.image,fabrique_art_objects_id.displayDate`
+    const likedArtworksFetch = await fetch(likedArtworksURL)
+    const likedArtworksJSON = await likedArtworksFetch.json()
 
-//Route naar admin
-app.get('/admin', async function (request, response){
+    const likedArtworks = likedArtworksJSON.data
 
+    // Group by displaydate (e.g., "1990s", "2000s", or exact year)
+    const artworksByPeriod = {}
 
-  response.render('admin.liquid', {
+    likedArtworks.forEach(item => {
+      const artwork = item.fabrique_art_objects_id
+      const period = parseDisplayDate(artwork.displayDate)
 
-  });
+      if (!artworksByPeriod[period]) {
+        artworksByPeriod[period] = []
+      }
+      artworksByPeriod[period].push(item)
+    })
 
+    // Convert to array of { period, artworks } for templating
+    const groupedPeriods = Object.entries(artworksByPeriod)
+      .map(([period, artworks]) => ({
+        period,
+        artworks
+      }))
+      .sort((a, b) => a.period.localeCompare(b.period)) // optional sort
+
+    response.render('admin.liquid', {
+      likedArtworks,
+      artworksByPeriod: groupedPeriods
+    })
+  } catch (error) {
+    console.error('Error in /admin:', error)
+    response.status(500).send('Internal Server Error')
+  }
 })
+
+
+function parseDisplayDate(displaydate) {
+  if (!displaydate) return 'Unknown'
+
+  const yearMatch = displaydate.match(/\d{4}/)
+  if (yearMatch) {
+    const year = parseInt(yearMatch[0], 10)
+    return `${Math.floor(year / 10) * 10}s` // e.g., 1995 => "1990s"
+  }
+
+  return displaydate.trim()
+}
+
 
 // POST for like
 
@@ -137,7 +180,7 @@ app.post('/like-artwork/:id', async function (request, response) {
   // console.log("we hebben een post " + request.params.id)
 
   // Hier wil je een fetch naar Directus waarmee je een like oplsaat die hoort bij een artwork
-  const postLikeUrl = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":1,"fabrique_art_objects_id":[id][_eq]=${request.params.id}`
+  const postLikeUrl = `https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5,"fabrique_art_objects_id":[id][_eq]=${request.params.id}`
 //   console.log("postLikeUrl " + postLikeUrl)
 
   // Post naar database
@@ -160,7 +203,7 @@ app.post('/like-artwork/:id', async function (request, response) {
 // DELETE for like
 
 app.post('/unlike-artwork/:id', async function (request, response) {
-  const likedArtobject = await fetch(`https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":3,"fabrique_art_objects_id":${request.params.id}}`)
+  const likedArtobject = await fetch(`https://fdnd-agency.directus.app/items/fabrique_users_fabrique_art_objects?filter={"fabrique_users_id":5,"fabrique_art_objects_id":${request.params.id}}`)
   const likedArtobjectResponseJSON = await likedArtobject.json()
   const likedArtobjectID = likedArtobjectResponseJSON.data[0].id
   console.log(likedArtobjectID)
