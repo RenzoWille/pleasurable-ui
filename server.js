@@ -94,30 +94,19 @@ app.get('/:lang/acquisition', async function (request, response) {
      })
   })
 
-  
+
 app.get('/tickets', async (req, res) => {
-  // Mock data for now; replace with API calls as needed
-  const museums = [
-    {
-      id: 1,
-      name: "National Museum of Qatar",
-      image: "/assets/nmoq.jpg",
-      description: "Your ticket covers admission to the museum and all exhibitions.",
-      exhibitions: [
-        "Ultraleggera: A Design Journey...",
-        "LATINOAMERICANO | Modern and Contemporary Art..."
-      ],
-      tickets: [
-        { label: "Adult Non-resident of Qatar", price: 25 },
-        { label: "Child (16 and under)",      price:  0 },
-        { label: "Student Resident of Qatar",  price:  0 }
-      ]
-    }
+  try {
+    const apiRes = await fetch('https://fdnd-agency.directus.app/items/fabrique_museums?fields=id,name,description,image,tickets.label,tickets.price,exhibitions');
+    const json = await apiRes.json();
+    const museums = json.data;
 
-  ]
-
-  res.render('tickets.liquid', { museums })
-})
+    res.render('tickets.liquid', { museums });
+  } catch (err) {
+    console.error('Error loading museums:', err);
+    res.status(500).send('Error loading museums.');
+  }
+});
 
 
 app.get('/admin', async function (request, response) {
