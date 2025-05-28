@@ -152,13 +152,13 @@ app.get('/admin', async function (request, response) {
       artworksByPeriod[period].push(item)
     })
 
-    // Convert to array of { period, artworks } for templating
+   // Convert to array of { period, artworks } for templating
     const groupedPeriods = Object.entries(artworksByPeriod)
       .map(([period, artworks]) => ({
         period,
         artworks
       }))
-      .sort((a, b) => a.period.localeCompare(b.period)) // optional sort
+      .sort((a, b) => a.period.localeCompare(b.period))
 
     response.render('admin.liquid', {
       likedArtworks,

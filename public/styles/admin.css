@@ -143,6 +143,9 @@ main[data-layout="timeline"]::before {
   height: fit-content;
   gap: 2rem;
 
+  border-radius: 0;
+  background: var(--color-white);
+
   @media (min-width: 800px) {
     width: 40vw;
  
