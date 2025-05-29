@@ -44,7 +44,7 @@ body {
   @media (max-width: 768px) {
 
     .art-images {
-        grid-template-columns: 1fr;
+        columns: 1;
         place-items: center;
         }
   
