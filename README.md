@@ -114,10 +114,14 @@ app.get('/', async (req, res) => {
 
 ### Karima Acquisition page, Arabische switch en succes pagina
 
-### Loading State
-Voordat het formulier wordt verzonden krijg je een loading state te zien. De opacity van de button wordt verlaagd en er komt een zandloper emoji tevoorschijn. De loading state is gecodeerd met behulp van javascript en CSS.
+### Pleasurable laag Acquisition page
+Aan de submit button is een Pleasurable laag toegevoegd =van de acquition pagina.
 
+https://github.com/user-attachments/assets/9552b468-75fd-4459-8504-920df214a157
 
+Dit heb ik gebouwd met onderstaande CSS. De CSS zorgt voor een animatie-effect bij een hover op de button. Met de linear-gradient verandert de kleur van beneden naar boven. De animatie gebeurt geleidelijk in 0,5 seconden.
+
+https://github.com/RenzoWille/pleasurable-ui/blob/1906f59635318fe71ca3b6d4980299f5f0ce8e7f/public/styles/acquisition.css#L111-L119
 
 ### Succes State
 Na het verzenden van het acquisition formulier krijg je een “succes state”  te zien. Het is een apart scherm die ziet nadat je een formulier succesvol hebt ingevuld. Dit is belangrijk voor de gebruikerservaring (UX) omdat het geeft duidelijkheid en het bevestigd dat alles goed is gegaan. 
