@@ -116,6 +116,8 @@ form input[type="text"] {
   &:hover {
         background-position: top;
         color: var(--color-white);
+        cursor: pointer;
+        text-decoration: underline;
     }
   @media (min-width: 680px) {
         padding: 1.3em 1.8em;
